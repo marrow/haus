@@ -33,6 +33,14 @@ update:  ## Update repository references to upstream Mastodon.
 ifeq ($(current), $(latest))
 	@echo
 	@echo "\tNothing to update."
+else
+	@echo "\tUpgrade required."
+	@echo
+	@echo "Please see: https://www.bentasker.co.uk/posts/blog/general/upgrading-a-docker-mastodon-instance-to-gain-security-fixes.html"
+	# Instructions may vary from version to version during upgrade.
+	# Ref: https://docs.joinmastodon.org/admin/upgrading/
+	# Ref: https://www.bentasker.co.uk/posts/blog/general/upgrading-a-docker-mastodon-instance-to-gain-security-fixes.html
+	# docker-compose run --rm web bundle exec rake chewy:upgrade
 endif
 
 migrate:  ## Execute any migrations required after updating upstream Mastodon references.
