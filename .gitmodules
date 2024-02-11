@@ -1,0 +1,4 @@
+[submodule "upstream"]
+	path = mastodon
+	url = https://github.com/mastodon/mastodon.git
+	branch = stable-4.2
