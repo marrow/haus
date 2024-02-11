@@ -3,11 +3,24 @@
 clean:  ## Clean project of temporary, ephemeral, or rebuildable content.
 	@echo "TBD"
 
+build:  ## Prepare the Docker Compose cluster.
+	docker-compose build
+
+init: build  ## Perform initial setup of a new Mastodon instance.
+	docker-compose run --rm web bundle exec rake mastodon:setup
+	docker-compose run --rm web bundle exec rake mastodon:webpush:generate_vapid_key
+
 start:  ## Start the Docker Compose cluster.
-	@echo "TBD"
+	docker-compose up -d
+
+restart:  ## Restart the Docker compose cluster.
+	docker-compose restart
 
 stop:  ## Stop the Docker Compose cluster.
-	@echo "TBD"
+	docker-compose down
+
+shell:  ## Execute a BASH shell within the web application container.
+	docker-compose run --rm web bundle exec /bin/bash
 
 update:  ## Update repository references to upstream Mastodon.
 	$(eval current := $(shell git -C mastodon rev-parse --abbrev-ref HEAD 2> /dev/null))
