@@ -36,9 +36,8 @@ ifeq ($(current), $(latest))
 else
 	@echo "\tUpgrade required."
 	@echo
-	@echo "Please see: https://www.bentasker.co.uk/posts/blog/general/upgrading-a-docker-mastodon-instance-to-gain-security-fixes.html"
+	@echo "Please see: https://docs.joinmastodon.org/admin/upgrading/"
 	# Instructions may vary from version to version during upgrade.
-	# Ref: https://docs.joinmastodon.org/admin/upgrading/
 	# Ref: https://www.bentasker.co.uk/posts/blog/general/upgrading-a-docker-mastodon-instance-to-gain-security-fixes.html
 	# docker-compose run --rm web bundle exec rake chewy:upgrade
 endif
@@ -50,7 +49,10 @@ backup:  ## Perform a PostgreSQL database backup.
 	docker exec mastodon-db-1 pg_dumpall -U postgres | gzip > backup/`date +'%Y%m%d'`.sql.gz
 
 restore:  ## Restore the latest PostgreSQL database backup.
-	@echo "TBD"
+	@echo "Please see: https://ashfurrow.com/blog/restoring-a-postgres-mastodon-database/"
+	# See also: https://docs.joinmastodon.org/admin/migrating/
+	#docker compose down
+	#docker-compose up -d db
 
 help:  ## Show this help message and exit.
 	@echo "Usage: make <command>\n\033[36m\033[0m"
