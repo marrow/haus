@@ -26,7 +26,7 @@ update:  ## Update repository references to upstream Mastodon.
 	$(eval current := $(shell git -C mastodon rev-parse --abbrev-ref HEAD 2> /dev/null))
 	@echo "Current version: ${current}"
 	
-	@git -C mastodon fetch
+	@git -C mastodon fetch --tags
 	$(eval latest := $(shell git -C mastodon branch -a | grep stable | tail -n 1 | sed -e 's/^  remotes\/origin\///' 2> /dev/null))
 	@echo " Latest version: ${latest}"
 	
