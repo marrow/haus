@@ -1,4 +1,4 @@
-.PHONY: clean start stop restart update migrate
+.PHONY: backup clean migrate restart restore start stop update
 
 clean:  ## Clean project of temporary, ephemeral, or rebuildable content.
 	@echo "TBD"
@@ -10,7 +10,17 @@ stop:  ## Stop the Docker Compose cluster.
 	@echo "TBD"
 
 update:  ## Update repository references to upstream Mastodon.
-	@echo "TBD"
+	$(eval current := $(shell git -C mastodon rev-parse --abbrev-ref HEAD 2> /dev/null))
+	@echo "Current version: ${current}"
+	
+	@git -C mastodon fetch
+	$(eval latest := $(shell git -C mastodon branch -a | grep stable | tail -n 1 | sed -e 's/^  remotes\/origin\///' 2> /dev/null))
+	@echo " Latest version: ${latest}"
+	
+ifeq ($(current), $(latest))
+	@echo
+	@echo "\tNothing to update."
+endif
 
 migrate:  ## Execute any migrations required after updating upstream Mastodon references.
 	@echo "TBD"
