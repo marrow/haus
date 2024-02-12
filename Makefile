@@ -30,17 +30,15 @@ update:  ## Update repository references to upstream Mastodon.
 	$(eval current := $(shell git -C mastodon rev-parse --abbrev-ref HEAD 2> /dev/null))
 	@echo "Current version: ${current}"
 	
-	@git -C mastodon fetch --tags
+	@git -C mastodon fetch --tags -q
 	$(eval latest := $(shell git -C mastodon branch -a | grep stable | tail -n 1 | sed -e 's/^  remotes\/origin\///' 2> /dev/null))
 	@echo " Latest version: ${latest}"
+	@echo
 	
 ifeq ($(current), $(latest))
-	@echo
 	@echo "\tNothing to update."
 else
-	@echo "\tUpgrade required."
-	@echo
-	@echo "Please see: https://docs.joinmastodon.org/admin/upgrading/"
+	@echo "\tUpgrade required.\n\tPlease see: https://docs.joinmastodon.org/admin/upgrading/"
 	# Instructions may vary from version to version during upgrade.
 	# Ref: https://www.bentasker.co.uk/posts/blog/general/upgrading-a-docker-mastodon-instance-to-gain-security-fixes.html
 endif
